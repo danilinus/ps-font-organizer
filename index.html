@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="index.js"></script>
+</head>
+<style>
+  body {
+    margin: 12px;
+  }
+
+  .wide-text {
+    width: 100%;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .font-panel {
+    padding: 10px;
+    font-family: Arial;
+  }
+
+  .search {
+    flex-grow: 1;
+    padding: 4px;
+    margin: 2px;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .tab {
+    padding: 5px 10px;
+    border-radius: 15px;
+    background: #454545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 5px;
+    padding: 5px;
+    height: 30px;
+  }
+
+  .tab:hover {
+    background: #404040;
+  }
+
+  .tab:active {
+    background: #2c2c2c;
+  }
+
+  .tab.active {
+    background: #1473e6;
+    color: white;
+  }
+
+  .tab.active:hover {
+    background: #0d66d0;
+  }
+
+  .font-item {
+    user-select: text;
+    padding: 8px 8px 8px 12px;
+    cursor: pointer;
+    color: #ffffff
+  }
+
+  .font-item:hover {
+    user-select: text;
+    background: #f0f0f0;
+    color: #000000
+  }
+
+  .family-item {
+    padding: 4px;
+    cursor: pointer;
+    color: #ffffff
+  }
+
+  .family-item:hover {
+    background: #666666;
+  }
+
+  .family-item-bad {
+    padding: 4px;
+    cursor: pointer;
+    background: #331000;
+    color: #ffffff
+  }
+
+  .family-item-bad:hover {
+    background: #4a1700;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0px;
+    padding: 5px 15px;
+  }
+
+  .family-open {
+    margin: 0px;
+    height: 18px;
+    width: 18px;
+    align-content: center;
+    margin-right: 5px;
+  }
+
+  .family-open:hover {
+    background-color: #999999;
+  }
+
+  h6 {
+    display: inline-block;
+    width: fit-content;
+  }
+
+  h2 {
+    margin: 0px;
+  }
+
+  .family-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .family-left {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .refresh {
+    margin: 0px;
+    padding: 0px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .search-div {
+    display: flex;
+  }
+
+  .close-button {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+  }
+
+  .close-button:hover {
+    background-color: #454545;
+  }
+
+  .close-button:active {
+    background-color: #2c2c2c;
+  }
+
+  .close-text {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0px;
+    height: inherit;
+    vertical-align: bottom;
+    display: table-cell;
+  }
+
+  .type-tab {
+    color: #ffffff;
+    background: #454545;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 2px;
+    height: 22px;
+    vertical-align: bottom;
+    display: table-cell;
+    display: inline-block;
+    width: fit-content;
+    padding: 1px 9px;
+  }
+
+  .type-tab:hover {
+    background-color: #404040;
+  }
+
+  .type-tab:active {
+    background-color: #2c2c2c;
+  }
+
+  .type-tab.active {
+    background-color: #1473e6;
+  }
+
+  .type-tab.active:hover {
+    background-color: #0d66d0;
+  }
+
+  /* icons */
+  .icon {
+    fill: currentColor;
+    height: 18px;
+    width: 18px;
+  }
+
+  .icon svg {
+    height: 18px;
+    width: 18px;
+  }
+
+  /* groups */
+  .group {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 2px;
+    margin-bottom: 5px;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    position: relative;
+  }
+
+  #sp-native-tab-page .group {
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+
+  .group>sp-label:not(.safe) {
+    position: absolute;
+    top: -1em;
+    left: 0px;
+    background-color: #3E3E3E;
+    display: block;
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-color-scheme: light),
+  (prefers-color-scheme: lightest) {
+    .group {
+      background-color: rgba(0, 0, 0, 0.0625);
+    }
+
+    .group>sp-label:not(.safe) {
+      background-color: #E8E8E8;
+    }
+  }
+
+  .group> :not(sp-label) {
+    margin: 6px;
+  }
+</style>
+
+<body>
+  <div class="tabs">
+    <div class="close-button" id="refresh">
+      <h2 class="close-text">↻</h2>
+    </div>
+    <div class="tab" data-category="all">Все</div>
+    <div class="tab" data-category="system">Системные</div>
+    <div class="tab active" data-category="adobe">Adobe</div>
+    <div class="tab" data-category="custom">Другие</div>
+    <div class="close-button" id="info">
+      <h2 class="close-text">🛈</h2>
+    </div>
+  </div>
+  <div class="family-header">
+    <sp-textfield class="search" type="search" placeholder="Поиск..." id="search"></sp-textfield>
+    <sp-action-button id="closeButton">
+      <h2 class="close-text">×</h2>
+    </sp-action-button>
+  </div>
+  <div id="typeList">
+    <h3 class="type-tab active">Все (121)</h3>
+    <h3 class="type-tab">Пиксельеные (7)</h3>
+    <h3 class="type-tab">Готические (13)</h3>
+    <h3 class="type-tab">Мультяшные (2)</h3>
+    <h3 class="type-tab">Футуристичные (22)</h3>
+  </div>
+  <div class="group" id="fontList"></div>
+</body>
+
+</html>

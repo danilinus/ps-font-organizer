@@ -1,0 +1,92 @@
+{
+  "id": "com.galkevich.font-organizer",
+  "name": "Font Organizer",
+  "version": "1.0.0",
+  "main": "index.html",
+  "host": [
+    {
+      "app": "PS",
+      "minVersion": "23.0.0"
+    }
+  ],
+  "requiredPermissions": {
+    "localFileSystem": "fullAccess"
+  },
+  "manifestVersion": 5,
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "layercreation",
+      "minimumSize": {
+        "width": 380,
+        "height": 350
+      },
+      "maximumSize": {
+        "width": 2000,
+        "height": 2000
+      },
+      "preferredDockedSize": {
+        "width": 380,
+        "height": 350
+      },
+      "preferredFloatingSize": {
+        "width": 380,
+        "height": 350
+      },
+      "label": {
+        "default": "Font Organizer"
+      },
+      "icons": [
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/dark.png",
+          "scale": [
+            1,
+            2
+          ],
+          "theme": [
+            "darkest",
+            "dark",
+            "medium"
+          ]
+        },
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/light.png",
+          "scale": [
+            1,
+            2
+          ],
+          "theme": [
+            "lightest",
+            "light"
+          ]
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "width": 48,
+      "height": 48,
+      "path": "icons/plugin-icon.png",
+      "scale": [
+        1,
+        2
+      ],
+      "theme": [
+        "darkest",
+        "dark",
+        "medium",
+        "lightest",
+        "light",
+        "all"
+      ],
+      "species": [
+        "pluginList"
+      ]
+    }
+  ]
+}
