@@ -44,10 +44,14 @@
     cursor: pointer;
     flex: 1;
     text-align: center;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     margin: 5px;
-    padding: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+    vertical-align: middle;
     height: 30px;
   }
 
@@ -188,10 +192,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     margin: 2px;
-    height: 22px;
+    height: 18px;
     vertical-align: bottom;
     display: table-cell;
     display: inline-block;
@@ -272,15 +276,18 @@
 
 <body>
   <div class="tabs">
-    <div class="close-button" id="refresh">
-      <h2 class="close-text">↻</h2>
+    <div class="close-button" id="refreshButton">
+      <h2 class="close-text">🔄</h2>
     </div>
     <div class="tab" data-category="all">Все</div>
     <div class="tab" data-category="system">Системные</div>
     <div class="tab active" data-category="adobe">Adobe</div>
     <div class="tab" data-category="custom">Другие</div>
-    <div class="close-button" id="info">
-      <h2 class="close-text">🛈</h2>
+    <div class="close-button" id="infoButton">
+      <h2 class="close-text">ℹ️</h2>
+    </div>
+    <div class="close-button" id="folderButton">
+      <h2 class="close-text">📁</h2>
     </div>
   </div>
   <div class="family-header">

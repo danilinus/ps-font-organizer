@@ -1,5 +1,6 @@
 const { app, core } = require("photoshop");
 const fs = require("fs");
+const uxp = require("uxp");
 
 // Пути к папкам со шрифтами
 const FONT_PATHS = {
@@ -290,13 +291,14 @@ async function showAlert(message) {
 }
 
 // DOM-элементы
-const refreshButton = document.getElementById("refresh");
-const infoButton = document.getElementById("info");
+const refreshButton = document.getElementById("refreshButton");
+const infoButton = document.getElementById("infoButton");
 const searchInput = document.getElementById("search");
 const tabs = document.querySelectorAll(".tab");
 const fontList = document.getElementById("fontList");
 const closeButton = document.getElementById("closeButton");
 const typeList = document.getElementById("typeList");
+const folderButton = document.getElementById("folderButton");
 
 // Применение шрифта
 async function applyFont(font) {
@@ -537,16 +539,84 @@ async function renderFonts(searchTerm = "", category = cat) {
 	});
 }
 
+function setFolderPath(path) {
+	FONT_PATHS.adobe = path;
+}
+
+// Функция для нормализации пути (замена \ на /)
+function normalizePath(path) {
+	if (!path) return path;
+	// Заменяем все обратные слеши на прямые
+	return path.replace(/\\/g, '/');
+}
+
+// Функция для загрузки пути из настроек (localStorage)
+function loadSavedFolderPath() {
+	const savedPath = localStorage.getItem("fonts-folder");
+
+	if (savedPath) {
+		console.warn("Загружен сохраненный путь:", savedPath);
+		return savedPath;
+	} else {
+		console.warn("Не загружен сохраненный путь");
+		return "file:C:/Program Files/Common Files/Adobe/Fonts";
+	}
+}
+
+// Функция для сохранения пути в настройки (localStorage)
+function saveFolderPath(path) {
+	if (path) {
+		localStorage.setItem("fonts-folder", path);
+		console.warn("Путь сохранен:", path);
+		// Обновляем отображение
+		setFolderPath(path);
+	}
+}
+
+// Асинхронная функция для выбора папки
+async function handleSelectFolder() {
+	try {
+		// Запрашиваем у пользователя папку через системный диалог.
+		// Функция getFolder() возвращает объект Folder, если пользователь выбрал папку,
+		// или null, если диалог был отменен.
+		const selectedFolder = await uxp.storage.localFileSystem.getFolder();
+
+		if (selectedFolder) {
+			// Получаем "родной" путь к папке (он может быть в URN-формате)
+			// Для отображения пользователю лучше использовать .nativePath
+			const folderPath = "file:" + normalizePath(selectedFolder.nativePath);
+
+			// Сохраняем путь в настройки
+			saveFolderPath(folderPath);
+
+			// Можно также показать временное сообщение (опционально)
+			showAlert(`Выбрана папка: ${folderPath}`);
+			init();
+		} else {
+			console.warn("Пользователь отменил выбор папки.");
+		}
+	} catch (error) {
+		console.error("Ошибка при выборе папки:", error);
+		showAlert("Ошибка доступа к файловой системе.");
+	}
+}
+
 // Инициализация
 async function init() {
 	try {
+		setFolderPath(loadSavedFolderPath());
+
 		await analyzeFonts();
 
 		// Обновление списка
 		refreshButton.onclick = () => init();
 
 		infoButton.onclick = () => {
-			showAlert("Шрифты Adobe должны быть размещены по этому пути:\nC:\\Program Files\\Common Files\\Adobe\\Fonts\n\nдля правильного отображения установить шрифты\nили разместить по этому пути: C:\\Windows\\Fonts\n\nпосле удаления шрифта из Adobe\nне забыть удалить шрифт из системы")
+			showAlert(`Шрифты Adobe должны быть размещены по этому пути:\n${FONT_PATHS.adobe}\n\nдля правильного отображения установить шрифты\nили разместить по этому пути: ${FONT_PATHS.system}\n\nпосле удаления шрифта из Adobe\nне забыть удалить шрифт из системы`)
+		};
+
+		folderButton.onclick = () => {
+			handleSelectFolder()
 		};
 
 		searchInput.oninput = (e) => renderFonts(e.target.value);
